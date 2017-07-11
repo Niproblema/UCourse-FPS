@@ -8,12 +8,17 @@
 
 
 EBTNodeResult::Type UChooseNextWaypoint::ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) {
-	//Get the Controled Pawn
+	
+	//Get the Controled Pawn and Route
 	AAIController* AIController = OwnerComp.GetAIOwner();
 	APawn* ControlledPawn = AIController->GetPawn();
+	UPatrolRoute* PatrolRoute = ControlledPawn->FindComponentByClass<UPatrolRoute>();
+	if (!ensure(PatrolRoute)) return EBTNodeResult::Failed;
+
 	//Get Patrolling points
-	APatrollingGuard* PatrollingGuard = Cast<APatrollingGuard>(ControlledPawn);
-	TArray<AActor*> PatrolPointsCPP = PatrollingGuard->PatrolPointsCPP;
+	TArray<AActor*> PatrolPointsCPP = PatrolRoute->GetPatrolPoint();
+	if (!PatrolPointsCPP.Num()) return EBTNodeResult::Failed;
+
 	//Set Next Waypoint
 	UBlackboardComponent* BlackboardComp = OwnerComp.GetBlackboardComponent();
 	int32 Index = BlackboardComp->GetValueAsInt(IndexKey.SelectedKeyName);

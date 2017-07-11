@@ -4,7 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "BehaviorTree/BTTaskNode.h"
-#include "PatrollingGuard.h"
+#include "PatrolRoute.h"
 #include "ChooseNextWaypoint.generated.h"
 
 /**
