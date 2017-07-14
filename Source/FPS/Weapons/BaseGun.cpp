@@ -15,22 +15,21 @@ ABaseGun::ABaseGun() {
 
 	// Create a gun mesh component
 	GunMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun"));
-	GunMesh->SetOnlyOwnerSee(true);			// only the owning player will see this mesh
+	//GunMesh->SetOnlyOwnerSee(true);			// only the owning player will see this mesh
 	GunMesh->bCastDynamicShadow = false;
 	GunMesh->CastShadow = false;
 	// FP_Gun->SetupAttachment(Mesh1P, TEXT("GripPoint"));
-	GunMesh->SetupAttachment(RootComponent);
+	//GunMesh->SetupAttachment(RootComponent);
+	SetRootComponent(GunMesh);
 
 	MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
 	MuzzleLocation->SetupAttachment(GunMesh);
-	MuzzleLocation->SetRelativeLocation(FVector(0.2f, 48.4f, -10.6f));
-
+	//MuzzleLocation->SetRelativeLocation(FVector(0.2f, 53.4f, -10.6f));
 }
 
 // Called when the game starts or when spawned
 void ABaseGun::BeginPlay() {
 	Super::BeginPlay();
-
 }
 
 // Called every frame
