@@ -22,6 +22,7 @@ class FPS_API ABaseGun : public AActor
 public:
 	// Sets default values for this actor's properties
 	ABaseGun();
+	UFUNCTION(BlueprintCallable, Category = Gameplay)
 	void OnFire();
 
 	// Called every frame
