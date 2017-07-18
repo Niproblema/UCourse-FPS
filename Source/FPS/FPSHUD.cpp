@@ -10,7 +10,7 @@
 AFPSHUD::AFPSHUD()
 {
 	// Set the crosshair texture
-	static ConstructorHelpers::FObjectFinder<UTexture2D> CrosshairTexObj(TEXT("/Game/Weapons/FirstPersonCrosshair"));
+	static ConstructorHelpers::FObjectFinder<UTexture2D> CrosshairTexObj(TEXT("/Game/Weapons/BaseGun/FirstPersonCrosshair"));
 	CrosshairTex = CrosshairTexObj.Object;
 }
 
