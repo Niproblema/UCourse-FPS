@@ -10,5 +10,7 @@ TODO list:
  1. Player shadows are invisble
  1. Barrier should only be passable for Player Actor. Also CollisionBox is destroying Projectiles
  1. Gun poking out of capsule
+ 1. Barrier wall is ugly
+ 1. GuardBehaviour sometimes shoots just 1 time, because enemy key gets reset? 282
  
  1.Android Build
