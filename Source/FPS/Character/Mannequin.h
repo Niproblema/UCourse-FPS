@@ -26,6 +26,11 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	virtual void UnPossessed() override;
+
+	UFUNCTION(BlueprintCallable, Category = Gameplay)
+		void OnDeath();
+
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
 		TSubclassOf<class ABaseGun> GunBlueprint;
 
@@ -43,5 +48,5 @@ private:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
 		ABaseGun* Gun;
-	
+
 };
