@@ -13,7 +13,6 @@ TODO list:
  1. Barrier wall is ugly and does not have collisions for anything. Only player should be allowed through
  1. GuardBehaviour sometimes shoots just 1 time, because enemy key gets reset? 282
  1. FP shoulders are visible from underneath
- 1. Less props spawn than requested?
  1. First tile should have a wall, or spawning volume adjusted 
  
  
