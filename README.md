@@ -15,5 +15,6 @@ TODO list:
  1. FP shoulders are visible from underneath
  1. First tile should have a wall, or spawning volume adjusted 
  
- 
+ 1.Read about static and dynamic collision chanells
+ 1. http://gameprogrammingpatterns.com/flyweight.html
  1.Android Build
