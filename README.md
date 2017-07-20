@@ -14,6 +14,7 @@ TODO list:
  1. GuardBehaviour sometimes shoots just 1 time, because enemy key gets reset? 282
  1. FP shoulders are visible from underneath
  1. Less props spawn than requested?
+ 1. First tile should have a wall, or spawning volume adjusted 
  
  
  1.Android Build
