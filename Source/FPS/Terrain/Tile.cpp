@@ -4,7 +4,9 @@
 #include "GameFramework/Actor.h"
 #include "Engine/World.h"
 #include "DrawDebugHelpers.h"
-
+#include "ActorPool.h"
+#include "EngineUtils.h"
+#include "AI/Navigation/NavigationSystem.h"
 
 
 // Sets default values
@@ -19,10 +21,34 @@ void ATile::BeginPlay() {
 	Super::BeginPlay();
 }
 
+void ATile::EndPlay(const EEndPlayReason::Type EndPlayReason) {
+	Super::EndPlay(EndPlayReason); //?
+	Pool->ReturnActor(NavMeshBoundsVolume);
+}
+
 // Called every frame
 void ATile::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
 
+}
+
+void ATile::SetPool(UActorPool * Pool) {
+	this->Pool = Pool;
+
+	ActivateNavMesh(Pool);
+}
+
+//Get NavMesh, Check if it's valid, set it's Location
+void ATile::ActivateNavMesh(UActorPool * Pool) {
+	NavMeshBoundsVolume = Pool->Checkout();
+	if (NavMeshBoundsVolume == nullptr) {
+		UE_LOG(LogTemp, Error, TEXT("NavMeshPool is out of NavMeshes!"))
+		return;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("%s checked out: (%s) at location %s"), *GetName(), *NavMeshBoundsVolume->GetName(), *((GetActorLocation() + FVector(2000, 0, 250)).ToString()))
+	NavMeshBoundsVolume->SetActorLocation(GetActorLocation() + FVector(2000, 0, 250)); //This should be chaanged if size chnages
+	GetWorld()->GetNavigationSystem()->Build();
+	//NavMeshBoundsVolume->Build
 }
 
 
@@ -42,9 +68,7 @@ void ATile::PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinNSpawn, int32 MaxN
 }
 
 bool ATile::FindEmptyLocation(float Radius, FVector& OutSpawnPoint) {
-	FVector Min = FVector(0, -2000, 0);
-	FVector Max = FVector(4000, 2000, 0);
-	FBox Bounds = FBox(Min, Max);
+	FBox Bounds = FBox(MinTile, MaxTile);
 	for (int32 i = 0; i < MAX_ATTEMPTS; i++) {
 		FVector CandidateSpawnPoint = FMath::RandPointInBox(Bounds);
 		if (CanSpawnAtLocation(CandidateSpawnPoint, Radius)) {

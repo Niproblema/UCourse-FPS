@@ -6,12 +6,14 @@
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
+class UActorPool;
+
 UCLASS()
 class FPS_API ATile : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ATile();
 
@@ -21,15 +23,27 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	UFUNCTION(BlueprintCallable, Category = Pool)
+		void SetPool(UActorPool * Pool);
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+		FVector MinTile = FVector(0, -2000, 0);
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+		FVector MaxTile = FVector(4000, 2000, 0);
 
 private:
 	bool CanSpawnAtLocation(FVector Location, float Radius);
 	bool FindEmptyLocation(float Radius, FVector& OutSpawnPoint);
 	void PlaceActor(TSubclassOf<AActor>ToSpawn, FVector SpawnPoint, float Rotation, float Scale);
+	void ActivateNavMesh(UActorPool * Pool);
 
+	UActorPool * Pool = nullptr;
+	AActor * NavMeshBoundsVolume = nullptr;
 	const int32 MAX_ATTEMPTS = 100;
 };
