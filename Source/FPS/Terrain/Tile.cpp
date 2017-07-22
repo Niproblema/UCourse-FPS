@@ -75,10 +75,13 @@ void ATile::PlaceAI(TSubclassOf<APawn> ToSpawn, int32 MinNSpawn, int32 MaxNSpawn
 			float Rotation = FMath::RandRange(-180.f, 180.f);
 			
 			//This is Same as PlaceProp(), but modified for AI
-			APawn* Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn);
-			Spawned->SetActorRelativeLocation(SpawnPoint);
+			FRotator RRotator = FRotator(0, Rotation, 0);
+			APawn* Spawned = GetWorld()->SpawnActor<APawn>(ToSpawn, SpawnPoint, RRotator);
+			if (!Spawned) {
+				UE_LOG(LogTemp, Error, TEXT("%s Could not spawn Actor %s"), *GetName(), *(ToSpawn->GetName()))
+					return;
+			}
 			Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
-			Spawned->SetActorRotation(FRotator(0, Rotation, 0));
 			Spawned->SpawnDefaultController();
 			Spawned->Tags.Add(FName("Opponent"));
 		}
@@ -117,10 +120,13 @@ bool ATile::CanSpawnAtLocation(FVector Location, float Radius) {
 }
 
 void ATile::PlaceProp(TSubclassOf<AActor> ToSpawn, const FSpawnOptions& SpawnOptions) {
-	AActor* Spawned = GetWorld()->SpawnActor<AActor>(ToSpawn);
-	Spawned->SetActorRelativeLocation(SpawnOptions.Location);
+	FRotator Rotation = FRotator(0, SpawnOptions.Rotation, 0);
+	AActor* Spawned = GetWorld()->SpawnActor<AActor>(ToSpawn, SpawnOptions.Location, Rotation);
+	if (!Spawned) {
+		UE_LOG(LogTemp, Error, TEXT("%s Could not spawn Actor %s"), *GetName(), *(ToSpawn->GetName()))
+			return;
+	}
 	Spawned->AttachToActor(this, FAttachmentTransformRules(EAttachmentRule::KeepRelative, false));
-	Spawned->SetActorRotation(FRotator(0, SpawnOptions.Rotation, 0));
 	Spawned->SetActorScale3D(FVector(SpawnOptions.Scale));
 }
 
