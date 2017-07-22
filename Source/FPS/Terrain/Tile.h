@@ -51,13 +51,12 @@ public:
 		FVector MaxTile = FVector(4000, 2000, 0);
 
 private:
-	TArray<FSpawnOptions> GenerateSpawnPositions(int32 MinNSpawn, int32 MaxNSpawn, float MinScale, float MaxScale, float Radius);
 	bool CanSpawnAtLocation(FVector Location, float Radius);
 	bool FindEmptyLocation(float Radius, FVector& OutSpawnPoint);
-	void PlaceActor(TSubclassOf<AActor>ToSpawn, const FSpawnOptions& SpawnOptions);
+	void PlaceProp(TSubclassOf<AActor>ToSpawn, const FSpawnOptions& SpawnOptions);
 	void ActivateNavMesh(UActorPool * Pool);
 
 	UActorPool * Pool = nullptr;
 	AActor * NavMeshBoundsVolume = nullptr;
-	const int32 MAX_ATTEMPTS = 100;
+	const int32 MAX_ATTEMPTS = 50;
 };
