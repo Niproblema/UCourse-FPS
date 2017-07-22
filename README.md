@@ -17,7 +17,9 @@ TODO list:
  1. Re add Shooting noise Emitter
  1. Player capsule is still colliding after death
  1. AI does not clear focus
+ 1. AI passes through barrriers like nothing
  1. Player can get stuck on prop right after entering new Tile
+ 1. Lagspike when generating new tile. NavMesh rebuild is slow
  
  1.Read about static and dynamic collision chanells
  1. http://gameprogrammingpatterns.com/flyweight.html

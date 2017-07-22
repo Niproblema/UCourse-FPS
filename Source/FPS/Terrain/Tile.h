@@ -6,6 +6,15 @@
 #include "GameFramework/Actor.h"
 #include "Tile.generated.h"
 
+USTRUCT()
+struct FSpawnOptions {
+	GENERATED_USTRUCT_BODY()
+
+	FVector Location;
+	float Rotation;
+	float Scale;
+};
+
 class UActorPool;
 
 UCLASS()
@@ -17,8 +26,12 @@ public:
 	// Sets default values for this actor's properties
 	ATile();
 
-	UFUNCTION(BlueprintCallable, Category = Gameplay)
+	UFUNCTION(BlueprintCallable, Category = Spawning)
 		void PlaceActors(TSubclassOf<AActor> ToSpawn, int32 MinNSpawn = 1, int32 MaxNSpawn = 1, float Radius = 300, float MinScale = 1, float MaxScale = 1);
+
+	UFUNCTION(BlueprintCallable, Category = Spawning)
+		void PlaceAI(TSubclassOf<APawn> ToSpawn, int32 MinNSpawn = 1, int32 MaxNSpawn = 1, float Radius = 90);
+
 
 protected:
 	// Called when the game starts or when spawned
@@ -38,9 +51,10 @@ public:
 		FVector MaxTile = FVector(4000, 2000, 0);
 
 private:
+	TArray<FSpawnOptions> GenerateSpawnPositions(int32 MinNSpawn, int32 MaxNSpawn, float MinScale, float MaxScale, float Radius);
 	bool CanSpawnAtLocation(FVector Location, float Radius);
 	bool FindEmptyLocation(float Radius, FVector& OutSpawnPoint);
-	void PlaceActor(TSubclassOf<AActor>ToSpawn, FVector SpawnPoint, float Rotation, float Scale);
+	void PlaceActor(TSubclassOf<AActor>ToSpawn, const FSpawnOptions& SpawnOptions);
 	void ActivateNavMesh(UActorPool * Pool);
 
 	UActorPool * Pool = nullptr;
