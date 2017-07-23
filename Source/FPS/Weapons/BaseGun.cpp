@@ -6,12 +6,13 @@
 #include "Kismet/HeadMountedDisplayFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
+#include "DrawDebugHelpers.h"
 
 
 // Sets default values
 ABaseGun::ABaseGun() {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.bCanEverTick = EnableDebugLine;
 
 	// Create a gun mesh component
 	GunMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun"));
@@ -35,7 +36,20 @@ void ABaseGun::BeginPlay() {
 // Called every frame
 void ABaseGun::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
+	
 
+	FVector MLoc = MuzzleLocation->GetComponentLocation();
+	FVector MRot = MuzzleLocation->GetComponentRotation().Vector();
+	DrawDebugLine(
+		GetWorld(),
+		MLoc,
+		(MLoc + MRot * 10000),
+		FColor::Magenta,
+		false,
+		0.f,
+		0.f,
+		1.f
+	);
 }
 
 
