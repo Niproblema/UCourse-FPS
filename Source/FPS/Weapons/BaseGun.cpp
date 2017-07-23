@@ -7,6 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "MotionControllerComponent.h"
 #include "DrawDebugHelpers.h"
+#include "Misc/OutputDeviceNull.h"
+
 
 
 // Sets default values
@@ -26,6 +28,7 @@ ABaseGun::ABaseGun() {
 	MuzzleLocation = CreateDefaultSubobject<USceneComponent>(TEXT("MuzzleLocation"));
 	MuzzleLocation->SetupAttachment(GunMesh);
 	//MuzzleLocation->SetRelativeLocation(FVector(0.2f, 53.4f, -10.6f));
+
 }
 
 // Called when the game starts or when spawned
@@ -78,8 +81,9 @@ void ABaseGun::OnFire() {
 	if (FireSound != nullptr)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
-		//MakeNoise(1.f, Cast<APawn>(this), MuzzleLocation->GetComponentLocation());
-		//This does not work
+		//Idk if this might fail
+		FOutputDeviceNull ar;
+		this->CallFunctionByNameWithArguments(TEXT("GunSoundEmmit"), ar, NULL, true);
 	}
 
 	// try and play a firing animation if specified
