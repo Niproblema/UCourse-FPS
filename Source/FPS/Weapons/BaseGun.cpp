@@ -12,7 +12,7 @@
 // Sets default values
 ABaseGun::ABaseGun() {
 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = EnableDebugLine;
+	PrimaryActorTick.bCanEverTick = true;
 
 	// Create a gun mesh component
 	GunMesh = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("Gun"));
@@ -36,20 +36,21 @@ void ABaseGun::BeginPlay() {
 // Called every frame
 void ABaseGun::Tick(float DeltaTime) {
 	Super::Tick(DeltaTime);
-	
 
-	FVector MLoc = MuzzleLocation->GetComponentLocation();
-	FVector MRot = MuzzleLocation->GetComponentRotation().Vector();
-	DrawDebugLine(
-		GetWorld(),
-		MLoc,
-		(MLoc + MRot * 10000),
-		FColor::Magenta,
-		false,
-		0.f,
-		0.f,
-		1.f
-	);
+	if (EnableDebugLine) {
+		FVector MLoc = MuzzleLocation->GetComponentLocation();
+		FVector MRot = MuzzleLocation->GetComponentRotation().Vector();
+		DrawDebugLine(
+			GetWorld(),
+			MLoc,
+			(MLoc + MRot * 2800),
+			FColor::Magenta,
+			false,
+			0.f,
+			0.f,
+			0.5
+		);
+	}
 }
 
 
@@ -77,6 +78,8 @@ void ABaseGun::OnFire() {
 	if (FireSound != nullptr)
 	{
 		UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
+		//MakeNoise(1.f, Cast<APawn>(this), MuzzleLocation->GetComponentLocation());
+		//This does not work
 	}
 
 	// try and play a firing animation if specified
