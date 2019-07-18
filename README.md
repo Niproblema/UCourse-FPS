@@ -1,6 +1,12 @@
-# UCourse-FPS
+# FPS
 ## Unreal fps game 
+First person shooter survival through procedurally generated world populated by angry people 😠 <br>
+Face opponents head on or use slightly advanced, but wonky stealth system, to sneak by and advance through increasingly hard levels.
 
+
+Content derived from UnrealCourse.
+
+![showcase](showcase.png)
 
 
 TODO list: 
