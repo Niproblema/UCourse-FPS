@@ -1,5 +1,5 @@
 # UCourse-FPS
-## Unreal fps game
+## Unreal fps game 
 
 
 
@@ -25,4 +25,4 @@ TODO list:
  1. http://gameprogrammingpatterns.com/flyweight.html
  1. Sun Movement and Better SkySphere for night
  1. Low fps - Optimize Grpahic settings or lengthy tasks
- 1. Android Build
+ 1. Android Build 

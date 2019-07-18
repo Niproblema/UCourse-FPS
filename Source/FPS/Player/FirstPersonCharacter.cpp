@@ -11,6 +11,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "Weapons/BaseGun.h"
 #include "MotionControllerComponent.h"
+#include "XRMotionControllerBase.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogFPChar, Warning, All);
 
@@ -49,7 +50,7 @@ AFirstPersonCharacter::AFirstPersonCharacter()
 
 	// Create VR Controllers.
 	R_MotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("R_MotionController"));
-	R_MotionController->Hand = EControllerHand::Right;
+	//R_MotionController->Hand = EControllerHand::Right;
 	R_MotionController->SetupAttachment(RootComponent);
 	L_MotionController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("L_MotionController"));
 	L_MotionController->SetupAttachment(RootComponent);

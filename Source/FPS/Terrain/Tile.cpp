@@ -6,7 +6,7 @@
 #include "DrawDebugHelpers.h"
 #include "ActorPool.h"
 #include "EngineUtils.h"
-#include "AI/Navigation/NavigationSystem.h"
+#include "NavigationSystem.h"
 
 
 // Sets default values
@@ -47,7 +47,9 @@ void ATile::ActivateNavMesh(UActorPool * Pool) {
 	}
 	//UE_LOG(LogTemp, Warning, TEXT("%s checked out: (%s) at location %s"), *GetName(), *NavMeshBoundsVolume->GetName(), *((GetActorLocation() + FVector(2000, 0, 250)).ToString()))
 	NavMeshBoundsVolume->SetActorLocation(GetActorLocation() + FVector(2000, 0, 250)); //This should be chaanged if size chnages
-	GetWorld()->GetNavigationSystem()->Build(); //TODO this is super slow method
+	FNavigationSystem::GetCurrent<UNavigationSystemV1>(GetWorld())->
+		Build(); //TODO this is super slow method
+
 }
 
 
